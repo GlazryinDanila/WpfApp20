@@ -1,0 +1,120 @@
+КОД ДЛЯ АВТОРИЗАЦИИИ
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+
+
+
+namespace WpfApp25
+{
+    /// <summary>
+    /// Логика взаимодействия для MainWindow.xaml
+    /// </summary>
+    public partial class privet : Window
+    {
+        DispatcherTimer timer = new DispatcherTimer();
+        public privet()
+        {
+            
+            InitializeComponent();
+            timer.Interval = new TimeSpan(0, 0, 1);
+            timer.Tick += timer_Tick;
+        }
+        int intrerv = 10; 
+
+        void timer_Tick( object sender, EventArgs e)
+        {
+            intrerv--;
+            if (intrerv == 0)
+            {
+                timer.Stop();
+                intrerv = 10;
+                textBoxCapthcaNeGen.Visibility = Visibility.Hidden;
+            }
+            buttonVxodAdmin.Content = "Блококировка на " + intrerv.ToString() + " Секунд";
+
+        }
+
+        private void buttonVxodAdmin_Click(object sender, RoutedEventArgs e)
+        {
+            string login = "xd";
+            string pass = "xd";
+
+            if (textBoxLogin.Text == login)
+            {
+                if (boxPassword.Password == pass)
+                {
+                    if (textBoxCapthcaGen.Text == textBoxCapthcaNeGen.Text)
+                    {
+                        Window1 win1 = new Window1();
+                        win1.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Капча неверная");
+                    }
+
+                }
+                else
+                {
+                    MessageBox.Show("Пароль неверная");
+                }
+            }
+            else
+            {
+                MessageBox.Show("логин неверная");
+            }
+        }
+
+       
+
+        private void buttonCapthca_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
+}
+
+///////////////////////////////////////
+
+<DataGrid>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Фио" Binding="{Binding СЮДА СУЩНОСТИ ИЗ БАЗЫ }" Width="*"></DataGridTextColumn>     
+                <DataGridTextColumn Header="Специальность" Binding="{Binding СЮДА СУЩНОСТИ ИЗ БАЗЫ) Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Посещаемость" Binding="{Binding СЮДА СУЩНОСТИ ИЗ БАЗЫ) Width="*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Номер студента" Binding="{Binding СЮДА СУЩНОСТИ ИЗ БАЗЫ) Width="*"></DataGridTextColumn>
+
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+модел.кс
+
+ private static НАЗВАНИЕБАЗЫ _context; ЭТО В CS
+        
+ 
+
+      public static НАЗВАНИЕБАЗЫ GetContext() 
+        {
+            if (_context == null)
+                _context = new НАЗВАНИЕБАЗЫ();
+            return _context;
+        }
+
+
+//////////////
+
+НАЗВАНИЕТАБЛИЦЫ.ItemsSource = НАЗВАНИЕБАЗЫ.GetContext().НАЗВАНИЕ СТОЛБЦА.ToList();
+ ЭТО В НАЧАЛЕ КОДА ГДЕ ПРОПИСЫВАЕТСЯ ТАБЛИЦА ИЗ БД 
